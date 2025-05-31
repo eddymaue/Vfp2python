@@ -73,7 +73,7 @@ Ce projet est sous licence MIT.
 
 ## 👤 Auteur
 
-Votre Nom
+Eddy Maue
 
 ## 🙏 Remerciements
 
