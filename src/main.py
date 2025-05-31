@@ -1,6 +1,5 @@
 # main.py
 """PyFoxPro IDE - Fichier principal"""
-#modification de main
 
 import sys
 import os
@@ -11,9 +10,9 @@ import traceback
 
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                            QHBoxLayout, QSplitter, QTabWidget, QLabel,
-                           QToolBar, QFileDialog, QMessageBox, QAction, QStyle)
+                           QToolBar, QFileDialog, QMessageBox, QStyle)
 from PyQt6.QtCore import Qt, QSize
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QAction
 
 # Import des modules
 from theme import ModernTheme
