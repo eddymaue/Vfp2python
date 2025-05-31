@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                              QToolBar, QAction, QLabel, QDialog, QTextEdit,
                              QPushButton, QMessageBox, QApplication)
 from PyQt6.QtCore import Qt, QSize, pyqtSignal, QEvent, QMimeData
-from PyQt6.QtGui import QFont, QDrag
+from PyQt6.QtGui import QFont, QDrag, QAction
 
 from theme import ModernTheme
 
@@ -162,7 +162,7 @@ class FormDesigner(QMainWindow):
         code = """# Formulaire généré automatiquement
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
-from PyQt6.QtGui import *
+from PyQt6.QtGui import *, QAction
 
 class GeneratedForm(QWidget):
     def __init__(self):
