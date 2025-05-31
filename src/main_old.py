@@ -8,11 +8,691 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
-# Import des modules de l'IDE de base
-from main import ModernTheme, PythonHighlighter, ModernCodeEditor, ModernDatabaseExplorer, ModernDataBrowser, \
-    OutputConsole
+
+class ModernTheme:
+    """Thème moderne pour l'interface"""
+
+    COLORS = {
+        'background': '#1e1e1e',
+        'panel': '#252526',
+        'border': '#3e3e42',
+        'text': '#cccccc',
+        'text_secondary': '#858585',
+        'accent': '#007acc',
+        'accent_hover': '#1a8ad4',
+        'error': '#f44747',
+        'success': '#4ec9b0',
+        'warning': '#dcdcaa',
+        'selection': '#264f78'
+    }
+
+    @staticmethod
+    def get_stylesheet():
+        """Retourner la feuille de style complète"""
+        return f"""
+        /* Global */
+        QWidget {{
+            background-color: {ModernTheme.COLORS['background']};
+            color: {ModernTheme.COLORS['text']};
+            font-family: 'Segoe UI', 'Ubuntu', sans-serif;
+            font-size: 13px;
+        }}
+
+        /* Menus */
+        QMenuBar {{
+            background-color: {ModernTheme.COLORS['panel']};
+            border-bottom: 1px solid {ModernTheme.COLORS['border']};
+            padding: 2px;
+        }}
+
+        QMenuBar::item:selected {{
+            background-color: {ModernTheme.COLORS['accent']};
+        }}
+
+        QMenu {{
+            background-color: {ModernTheme.COLORS['panel']};
+            border: 1px solid {ModernTheme.COLORS['border']};
+        }}
+
+        QMenu::item:selected {{
+            background-color: {ModernTheme.COLORS['accent']};
+        }}
+
+        /* Barres d'outils */
+        QToolBar {{
+            background-color: {ModernTheme.COLORS['panel']};
+            border-bottom: 1px solid {ModernTheme.COLORS['border']};
+            padding: 4px;
+            spacing: 2px;
+        }}
+
+        QToolButton {{
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            padding: 4px 8px;
+            margin: 2px;
+        }}
+
+        QToolButton:hover {{
+            background-color: {ModernTheme.COLORS['accent']};
+            border-color: {ModernTheme.COLORS['accent_hover']};
+        }}
+
+        /* Éditeur de texte */
+        QPlainTextEdit, QTextEdit {{
+            background-color: {ModernTheme.COLORS['background']};
+            border: 1px solid {ModernTheme.COLORS['border']};
+            selection-background-color: {ModernTheme.COLORS['selection']};
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+        }}
+
+        /* Tabs */
+        QTabWidget::pane {{
+            border: 1px solid {ModernTheme.COLORS['border']};
+            background-color: {ModernTheme.COLORS['background']};
+        }}
+
+        QTabBar::tab {{
+            background-color: {ModernTheme.COLORS['panel']};
+            padding: 8px 16px;
+            margin-right: 2px;
+            border: 1px solid {ModernTheme.COLORS['border']};
+            border-bottom: none;
+        }}
+
+        QTabBar::tab:selected {{
+            background-color: {ModernTheme.COLORS['background']};
+            border-bottom: 1px solid {ModernTheme.COLORS['background']};
+        }}
+
+        /* Arbres et listes */
+        QTreeWidget, QListWidget, QTableWidget {{
+            background-color: {ModernTheme.COLORS['panel']};
+            border: 1px solid {ModernTheme.COLORS['border']};
+            outline: none;
+        }}
+
+        QTreeWidget::item:selected, QListWidget::item:selected {{
+            background-color: {ModernTheme.COLORS['accent']};
+        }}
+
+        QTreeWidget::item:hover, QListWidget::item:hover {{
+            background-color: {ModernTheme.COLORS['selection']};
+        }}
+
+        /* Boutons */
+        QPushButton {{
+            background-color: {ModernTheme.COLORS['accent']};
+            border: none;
+            border-radius: 3px;
+            padding: 6px 16px;
+            font-weight: 500;
+        }}
+
+        QPushButton:hover {{
+            background-color: {ModernTheme.COLORS['accent_hover']};
+        }}
+
+        QPushButton:pressed {{
+            background-color: {ModernTheme.COLORS['selection']};
+        }}
+
+        /* Champs de saisie */
+        QLineEdit, QComboBox, QSpinBox {{
+            background-color: {ModernTheme.COLORS['panel']};
+            border: 1px solid {ModernTheme.COLORS['border']};
+            border-radius: 3px;
+            padding: 4px 8px;
+        }}
+
+        QLineEdit:focus, QComboBox:focus, QSpinBox:focus {{
+            border-color: {ModernTheme.COLORS['accent']};
+        }}
+
+        /* Scrollbars */
+        QScrollBar:vertical {{
+            background-color: {ModernTheme.COLORS['background']};
+            width: 12px;
+            border: none;
+        }}
+
+        QScrollBar::handle:vertical {{
+            background-color: {ModernTheme.COLORS['border']};
+            border-radius: 6px;
+            min-height: 20px;
+        }}
+
+        QScrollBar::handle:vertical:hover {{
+            background-color: {ModernTheme.COLORS['text_secondary']};
+        }}
+
+        /* GroupBox */
+        QGroupBox {{
+            border: 1px solid {ModernTheme.COLORS['border']};
+            border-radius: 5px;
+            margin-top: 10px;
+            padding-top: 10px;
+        }}
+
+        QGroupBox::title {{
+            subcontrol-origin: margin;
+            left: 10px;
+            padding: 0 5px 0 5px;
+        }}
+
+        /* Splitters */
+        QSplitter::handle {{
+            background-color: {ModernTheme.COLORS['border']};
+        }}
+
+        QSplitter::handle:hover {{
+            background-color: {ModernTheme.COLORS['accent']};
+        }}
+
+        /* Status bar */
+        QStatusBar {{
+            background-color: {ModernTheme.COLORS['panel']};
+            border-top: 1px solid {ModernTheme.COLORS['border']};
+        }}
+
+        /* Labels spéciaux */
+        QLabel[role="header"] {{
+            font-size: 16px;
+            font-weight: bold;
+            color: {ModernTheme.COLORS['accent']};
+            padding: 8px 0;
+        }}
+        """
 
 
+class PythonHighlighter(QSyntaxHighlighter):
+    """Coloration syntaxique pour Python"""
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        # Formats
+        self.keyword_format = QTextCharFormat()
+        self.keyword_format.setForeground(QColor('#569cd6'))
+        self.keyword_format.setFontWeight(QFont.Weight.Bold)
+
+        self.string_format = QTextCharFormat()
+        self.string_format.setForeground(QColor('#ce9178'))
+
+        self.comment_format = QTextCharFormat()
+        self.comment_format.setForeground(QColor('#6a9955'))
+        self.comment_format.setFontItalic(True)
+
+        self.function_format = QTextCharFormat()
+        self.function_format.setForeground(QColor('#dcdcaa'))
+
+        self.number_format = QTextCharFormat()
+        self.number_format.setForeground(QColor('#b5cea8'))
+
+        self.class_format = QTextCharFormat()
+        self.class_format.setForeground(QColor('#4ec9b0'))
+
+        # Mots-clés Python
+        self.keywords = [
+            'and', 'as', 'assert', 'break', 'class', 'continue', 'def',
+            'del', 'elif', 'else', 'except', 'finally', 'for', 'from',
+            'global', 'if', 'import', 'in', 'is', 'lambda', 'not',
+            'or', 'pass', 'raise', 'return', 'try', 'while', 'with',
+            'yield', 'None', 'True', 'False', 'self'
+        ]
+
+    def highlightBlock(self, text):
+        """Colorer un bloc de texte"""
+        # Mots-clés
+        for keyword in self.keywords:
+            pattern = f'\\b{keyword}\\b'
+            expression = QRegularExpression(pattern)
+            match_iterator = expression.globalMatch(text)
+
+            while match_iterator.hasNext():
+                match = match_iterator.next()
+                self.setFormat(match.capturedStart(), match.capturedLength(), self.keyword_format)
+
+        # Chaînes entre guillemets simples
+        expression = QRegularExpression("'[^']*'")
+        match_iterator = expression.globalMatch(text)
+        while match_iterator.hasNext():
+            match = match_iterator.next()
+            self.setFormat(match.capturedStart(), match.capturedLength(), self.string_format)
+
+        # Chaînes entre guillemets doubles
+        expression = QRegularExpression('"[^"]*"')
+        match_iterator = expression.globalMatch(text)
+        while match_iterator.hasNext():
+            match = match_iterator.next()
+            self.setFormat(match.capturedStart(), match.capturedLength(), self.string_format)
+
+        # Commentaires
+        expression = QRegularExpression('#[^\n]*')
+        match_iterator = expression.globalMatch(text)
+        while match_iterator.hasNext():
+            match = match_iterator.next()
+            self.setFormat(match.capturedStart(), match.capturedLength(), self.comment_format)
+
+        # Nombres
+        expression = QRegularExpression(r'\b\d+\.?\d*\b')
+        match_iterator = expression.globalMatch(text)
+        while match_iterator.hasNext():
+            match = match_iterator.next()
+            self.setFormat(match.capturedStart(), match.capturedLength(), self.number_format)
+
+        # Fonctions
+        expression = QRegularExpression(r'\b[A-Za-z_][A-Za-z0-9_]*(?=\()')
+        match_iterator = expression.globalMatch(text)
+        while match_iterator.hasNext():
+            match = match_iterator.next()
+            self.setFormat(match.capturedStart(), match.capturedLength(), self.function_format)
+
+        # Classes
+        expression = QRegularExpression(r'\bclass\s+([A-Za-z_][A-Za-z0-9_]*)')
+        match_iterator = expression.globalMatch(text)
+        while match_iterator.hasNext():
+            match = match_iterator.next()
+            self.setFormat(match.capturedStart(1), match.capturedLength(1), self.class_format)
+
+
+class LineNumberArea(QWidget):
+    """Zone pour afficher les numéros de ligne"""
+
+    def __init__(self, editor):
+        super().__init__(editor)
+        self.editor = editor
+
+    def sizeHint(self):
+        return QSize(self.editor.line_number_area_width(), 0)
+
+    def paintEvent(self, event):
+        self.editor.line_number_area_paint_event(event)
+
+
+class ModernCodeEditor(QPlainTextEdit):
+    """Éditeur de code avec numéros de ligne et coloration syntaxique"""
+
+    def __init__(self):
+        super().__init__()
+
+        # Zone des numéros de ligne
+        self.line_number_area = LineNumberArea(self)
+
+        # Connexions
+        self.blockCountChanged.connect(self.update_line_number_area_width)
+        self.updateRequest.connect(self.update_line_number_area)
+        self.cursorPositionChanged.connect(self.highlight_current_line)
+
+        # Configuration
+        self.update_line_number_area_width(0)
+        self.highlight_current_line()
+
+        # Coloration syntaxique
+        self.highlighter = PythonHighlighter(self.document())
+
+        # Police
+        font = QFont('Consolas', 11)
+        font.setStyleHint(QFont.StyleHint.Monospace)
+        self.setFont(font)
+
+        # Tab
+        self.setTabStopDistance(QFontMetricsF(font).horizontalAdvance(' ') * 4)
+
+    def line_number_area_width(self):
+        """Calculer la largeur de la zone des numéros"""
+        digits = 1
+        max_num = max(1, self.blockCount())
+        while max_num >= 10:
+            max_num //= 10
+            digits += 1
+
+        space = 3 + self.fontMetrics().horizontalAdvance('9') * digits + 10
+        return space
+
+    def update_line_number_area_width(self, _):
+        """Mettre à jour la largeur"""
+        self.setViewportMargins(self.line_number_area_width(), 0, 0, 0)
+
+    def update_line_number_area(self, rect, dy):
+        """Mettre à jour la zone"""
+        if dy:
+            self.line_number_area.scroll(0, dy)
+        else:
+            self.line_number_area.update(0, rect.y(), self.line_number_area.width(), rect.height())
+
+        if rect.contains(self.viewport().rect()):
+            self.update_line_number_area_width(0)
+
+    def resizeEvent(self, event):
+        """Redimensionner"""
+        super().resizeEvent(event)
+        cr = self.contentsRect()
+        self.line_number_area.setGeometry(QRect(cr.left(), cr.top(),
+                                                self.line_number_area_width(), cr.height()))
+
+    def highlight_current_line(self):
+        """Surligner la ligne courante"""
+        extra_selections = []
+
+        if not self.isReadOnly():
+            selection = QTextEdit.ExtraSelection()
+
+            line_color = QColor(ModernTheme.COLORS['selection'])
+
+            selection.format.setBackground(line_color)
+            selection.format.setProperty(QTextFormat.Property.FullWidthSelection, True)
+            selection.cursor = self.textCursor()
+            selection.cursor.clearSelection()
+
+            extra_selections.append(selection)
+
+        self.setExtraSelections(extra_selections)
+
+    def line_number_area_paint_event(self, event):
+        """Dessiner les numéros de ligne"""
+        painter = QPainter(self.line_number_area)
+        painter.fillRect(event.rect(), QColor(ModernTheme.COLORS['panel']))
+
+        block = self.firstVisibleBlock()
+        block_number = block.blockNumber()
+        top = int(self.blockBoundingGeometry(block).translated(self.contentOffset()).top())
+        bottom = top + int(self.blockBoundingRect(block).height())
+
+        painter.setPen(QColor(ModernTheme.COLORS['text_secondary']))
+
+        while block.isValid() and top <= event.rect().bottom():
+            if block.isVisible() and bottom >= event.rect().top():
+                number = str(block_number + 1)
+                painter.drawText(0, top, self.line_number_area.width() - 5,
+                                 self.fontMetrics().height(),
+                                 Qt.AlignmentFlag.AlignRight, number)
+
+            block = block.next()
+            top = bottom
+            bottom = top + int(self.blockBoundingRect(block).height())
+            block_number += 1
+
+
+class ModernDatabaseExplorer(QTreeWidget):
+    """Explorateur de base de données moderne"""
+
+    def __init__(self):
+        super().__init__()
+        self.db_connection = None
+
+        # Configuration
+        self.setHeaderHidden(True)
+        self.setAnimated(True)
+
+        # Style
+        self.setStyleSheet(f"""
+            QTreeWidget {{
+                border: none;
+                background-color: {ModernTheme.COLORS['panel']};
+                padding: 4px;
+            }}
+            QTreeWidget::item {{
+                padding: 4px;
+            }}
+            QTreeWidget::item:hover {{
+                background-color: {ModernTheme.COLORS['selection']};
+            }}
+            QTreeWidget::item:selected {{
+                background-color: {ModernTheme.COLORS['accent']};
+            }}
+        """)
+
+        # Menu contextuel
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_context_menu)
+
+    def connect_database(self, db_path):
+        """Se connecter à une base de données"""
+        try:
+            self.db_connection = sqlite3.connect(db_path)
+            self.refresh()
+            return True
+        except Exception as e:
+            QMessageBox.critical(self, "Erreur", f"Impossible de se connecter: {str(e)}")
+            return False
+
+    def refresh(self):
+        """Rafraîchir l'arbre"""
+        self.clear()
+
+        if not self.db_connection:
+            return
+
+        # Nœud racine
+        root = QTreeWidgetItem(self, ["📊 Base de données"])
+        root.setExpanded(True)
+
+        # Tables
+        tables_node = QTreeWidgetItem(root, ["📁 Tables"])
+        cursor = self.db_connection.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+
+        for table in cursor.fetchall():
+            table_item = QTreeWidgetItem(tables_node, [f"📋 {table[0]}"])
+
+            # Ajouter les colonnes
+            cursor.execute(f"PRAGMA table_info({table[0]})")
+            columns = cursor.fetchall()
+
+            for col in columns:
+                col_text = f"• {col[1]} ({col[2]})"
+                if col[5]:  # Primary key
+                    col_text = f"🔑 {col[1]} ({col[2]})"
+
+                QTreeWidgetItem(table_item, [col_text])
+
+        tables_node.setExpanded(True)
+
+    def show_context_menu(self, position):
+        """Afficher le menu contextuel"""
+        item = self.itemAt(position)
+        if not item:
+            return
+
+        menu = QMenu(self)
+
+        # Actions selon le type d'élément
+        if item.text(0).startswith("📋"):
+            table_name = item.text(0)[2:]
+
+            view_action = QAction("👁️ Voir les données", self)
+            view_action.triggered.connect(lambda: self.view_table_data(table_name))
+            menu.addAction(view_action)
+
+            export_action = QAction("💾 Exporter en CSV", self)
+            export_action.triggered.connect(lambda: self.export_table_csv(table_name))
+            menu.addAction(export_action)
+
+        menu.exec(self.mapToGlobal(position))
+
+    def view_table_data(self, table_name):
+        """Voir les données d'une table"""
+        # Émettre un signal ou appeler une méthode parent
+        pass
+
+    def export_table_csv(self, table_name):
+        """Exporter une table en CSV"""
+        file_path, _ = QFileDialog.getSaveFileName(
+            self,
+            f"Exporter {table_name}",
+            f"{table_name}.csv",
+            "CSV Files (*.csv)"
+        )
+
+        if file_path:
+            try:
+                cursor = self.db_connection.cursor()
+                cursor.execute(f"SELECT * FROM {table_name}")
+
+                import csv
+                with open(file_path, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+
+                    # En-têtes
+                    writer.writerow([desc[0] for desc in cursor.description])
+
+                    # Données
+                    writer.writerows(cursor.fetchall())
+
+                QMessageBox.information(self, "Succès", f"Table exportée vers {file_path}")
+
+            except Exception as e:
+                QMessageBox.critical(self, "Erreur", f"Erreur lors de l'export: {str(e)}")
+
+
+class ModernDataBrowser(QTableWidget):
+    """Navigateur de données moderne"""
+
+    def __init__(self):
+        super().__init__()
+
+        # Configuration
+        self.setAlternatingRowColors(True)
+        self.setSortingEnabled(True)
+        self.setSelectionBehavior(QTableWidget.SelectionBehavior.SelectRows)
+
+        # Style
+        self.setStyleSheet(f"""
+            QTableWidget {{
+                border: none;
+                gridline-color: {ModernTheme.COLORS['border']};
+            }}
+            QTableWidget::item {{
+                padding: 4px;
+            }}
+            QTableWidget::item:selected {{
+                background-color: {ModernTheme.COLORS['accent']};
+            }}
+            QHeaderView::section {{
+                background-color: {ModernTheme.COLORS['panel']};
+                padding: 4px;
+                border: none;
+                border-right: 1px solid {ModernTheme.COLORS['border']};
+                border-bottom: 1px solid {ModernTheme.COLORS['border']};
+            }}
+        """)
+
+        # Menu contextuel
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_context_menu)
+
+    def load_table(self, connection, table_name):
+        """Charger les données d'une table"""
+        try:
+            cursor = connection.cursor()
+            cursor.execute(f"SELECT * FROM {table_name}")
+
+            # Récupérer les données
+            data = cursor.fetchall()
+
+            # Configurer le tableau
+            if data:
+                self.setRowCount(len(data))
+                self.setColumnCount(len(data[0]))
+
+                # En-têtes
+                headers = [desc[0] for desc in cursor.description]
+                self.setHorizontalHeaderLabels(headers)
+
+                # Données
+                for i, row in enumerate(data):
+                    for j, value in enumerate(row):
+                        item = QTableWidgetItem(str(value) if value is not None else "")
+                        self.setItem(i, j, item)
+
+                # Ajuster les colonnes
+                self.resizeColumnsToContents()
+
+        except Exception as e:
+            QMessageBox.critical(self, "Erreur", f"Erreur lors du chargement: {str(e)}")
+
+    def show_context_menu(self, position):
+        """Afficher le menu contextuel"""
+        menu = QMenu(self)
+
+        copy_action = QAction("📋 Copier", self)
+        copy_action.triggered.connect(self.copy_selection)
+        menu.addAction(copy_action)
+
+        export_action = QAction("💾 Exporter la sélection", self)
+        export_action.triggered.connect(self.export_selection)
+        menu.addAction(export_action)
+
+        menu.exec(self.mapToGlobal(position))
+
+    def copy_selection(self):
+        """Copier la sélection dans le presse-papier"""
+        selection = self.selectedRanges()
+        if selection:
+            # Récupérer les données sélectionnées
+            text = ""
+            for range in selection:
+                for row in range(range.topRow(), range.bottomRow() + 1):
+                    row_data = []
+                    for col in range(range.leftColumn(), range.rightColumn() + 1):
+                        item = self.item(row, col)
+                        row_data.append(item.text() if item else "")
+                    text += "\t".join(row_data) + "\n"
+
+            QApplication.clipboard().setText(text)
+
+    def export_selection(self):
+        """Exporter la sélection"""
+        # Implémenter l'export de la sélection
+        pass
+
+
+class OutputConsole(QTextEdit):
+    """Console de sortie pour l'exécution"""
+
+    def __init__(self):
+        super().__init__()
+
+        # Configuration
+        self.setReadOnly(True)
+        self.setFont(QFont('Consolas', 10))
+
+        # Style
+        self.setStyleSheet(f"""
+            QTextEdit {{
+                background-color: {ModernTheme.COLORS['background']};
+                border: none;
+                padding: 8px;
+            }}
+        """)
+
+    def write_output(self, text, output_type='info'):
+        """Écrire dans la console avec couleur"""
+        cursor = self.textCursor()
+        cursor.movePosition(QTextCursor.MoveOperation.End)
+
+        # Format selon le type
+        format = QTextCharFormat()
+
+        if output_type == 'error':
+            format.setForeground(QColor(ModernTheme.COLORS['error']))
+        elif output_type == 'success':
+            format.setForeground(QColor(ModernTheme.COLORS['success']))
+        elif output_type == 'warning':
+            format.setForeground(QColor(ModernTheme.COLORS['warning']))
+        else:
+            format.setForeground(QColor(ModernTheme.COLORS['text']))
+
+        cursor.insertText(text + '\n', format)
+
+        # Scroll vers le bas
+        self.verticalScrollBar().setValue(self.verticalScrollBar().maximum())
+
+
+# Suite du code avec SQLQueryBuilder, FormDesigner, etc...
 class SQLQueryBuilder(QDialog):
     """Générateur de requêtes SQL visuel"""
 
