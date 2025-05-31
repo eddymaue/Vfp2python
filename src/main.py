@@ -1,5 +1,6 @@
 # main.py
 """PyFoxPro IDE - Fichier principal"""
+#modification de main
 
 import sys
 import os
