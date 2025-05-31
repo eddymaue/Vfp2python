@@ -2,7 +2,7 @@
 """Module pour le thème et les styles de l'interface"""
 
 from PyQt6.QtGui import QColor
-
+# test
 
 class ModernTheme:
     """Thème moderne pour l'interface"""
