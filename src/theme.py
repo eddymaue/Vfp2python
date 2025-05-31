@@ -4,6 +4,9 @@
 from PyQt6.QtGui import QColor
 # test
 
+
+
+
 class ModernTheme:
     """Thème moderne pour l'interface"""
 
