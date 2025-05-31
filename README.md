@@ -43,7 +43,7 @@ pip install PyQt6
 
 Lancer l'IDE :
 ```bash
-python main.py
+python main.py 
 ```
 
 ## 📁 Structure du projet
