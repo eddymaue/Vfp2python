@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QPlainTextEdit, QWidget, QTextEdit
 from PyQt6.QtCore import Qt, QRect, QSize, pyqtSignal, QRegularExpression
 from PyQt6.QtGui import (QColor, QTextCharFormat, QFont, QPainter,
                          QSyntaxHighlighter, QTextCursor, QFontMetricsF,
-                         QTextFormat, QRegularExpression)
+                         QTextFormat)
 
 from theme import ModernTheme
 
