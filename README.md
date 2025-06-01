@@ -43,7 +43,7 @@ pip install PyQt6
 
 Lancer l'IDE :
 ```bash
-python main.py
+python main.py 
 ```
 
 ## 📁 Structure du projet
@@ -73,7 +73,7 @@ Ce projet est sous licence MIT.
 
 ## 👤 Auteur
 
-Votre Nom
+Eddy Mau
 
 ## 🙏 Remerciements
 
